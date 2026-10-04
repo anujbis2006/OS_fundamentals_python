@@ -5,6 +5,21 @@
 > Mark a box with `[x]` after you understand the concept and can explain it
 > without copying the example. Add notes or new topics as the course grows.
 
+## Current status
+
+**Core tutorial completed:** Parts 1–5 are complete. The advanced topics in
+Part 6 are the next stage of learning.
+
+The completed tutorial now covers:
+
+- Working directories and safe temporary practice workspaces
+- Listing and classifying files and directories
+- Creating and removing directories
+- Removing and renaming files
+- File sizes and extensions
+- File names, parent directories, joined paths, absolute paths, and normalized
+  paths
+
 ## How to use this guide
 
 1. Read one topic at a time.
@@ -20,9 +35,9 @@
 
 ### 1. Current working directory
 
-- [ ] Understand what a current working directory means.
-- [ ] Use `os.getcwd()` to display the directory where Python is running.
-- [ ] Explain why a relative path is interpreted from the current directory.
+- [x] Understand what a current working directory means.
+- [x] Use `os.getcwd()` to display the directory where Python is running.
+- [x] Explain why a relative path is interpreted from the current directory.
 
 **My notes:**
 
@@ -30,10 +45,10 @@
 
 ### 2. Changing the current working directory
 
-- [ ] Use `os.chdir(path)` to move to another directory.
-- [ ] Verify the change with `os.getcwd()`.
-- [ ] Understand that `os.chdir()` changes process-wide state.
-- [ ] Know why a program should validate a path before calling `os.chdir()`.
+- [x] Use `os.chdir(path)` to move to another directory.
+- [x] Verify the change with `os.getcwd()`.
+- [x] Understand that `os.chdir()` changes process-wide state.
+- [x] Know why a program should validate a path before calling `os.chdir()`.
 
 **My notes:**
 
@@ -45,17 +60,17 @@
 
 ### 3. Listing files and folders
 
-- [ ] Use `os.listdir()` for the current directory.
-- [ ] Use `os.listdir(path)` for a specific directory.
-- [ ] Loop over the returned names.
-- [ ] Understand that `os.listdir()` returns names, not complete paths.
-- [ ] Build a complete path with `os.path.join()`.
+- [x] Use `os.listdir()` for the current directory.
+- [x] Use `os.listdir(path)` for a specific directory.
+- [x] Loop over the returned names.
+- [x] Understand that `os.listdir()` returns names, not complete paths.
+- [x] Build a complete path with `os.path.join()`.
 
 **Try it:**
 
-- [ ] List all entries in a practice folder.
-- [ ] Print each entry on its own line.
-- [ ] Find only the entries with a `.csv` extension.
+- [x] List all entries in a practice folder.
+- [x] Print each entry on its own line.
+- [x] Find only the entries with a `.csv` extension.
 
 **My notes:**
 
@@ -63,9 +78,9 @@
 
 ### 4. Checking whether something exists
 
-- [ ] Use `os.path.exists(path)`.
-- [ ] Write an `if/else` check for an optional file such as `config.json`.
-- [ ] Understand that a path can exist as either a file or a directory.
+- [x] Use `os.path.exists(path)`.
+- [x] Write an `if/else` check for an optional file such as `config.json`.
+- [x] Understand that a path can exist as either a file or a directory.
 
 **My notes:**
 
@@ -73,10 +88,10 @@
 
 ### 5. Distinguishing files and directories
 
-- [ ] Use `os.path.isfile(path)`.
-- [ ] Use `os.path.isdir(path)`.
-- [ ] Classify every entry returned by `os.listdir()`.
-- [ ] Understand why checking the type before an operation prevents errors.
+- [x] Use `os.path.isfile(path)`.
+- [x] Use `os.path.isdir(path)`.
+- [x] Classify every entry returned by `os.listdir()`.
+- [x] Understand why checking the type before an operation prevents errors.
 
 **My notes:**
 
@@ -88,10 +103,10 @@
 
 ### 6. Creating one directory with `os.mkdir()`
 
-- [ ] Create one new directory with `os.mkdir(path)`.
-- [ ] Understand that it raises `FileExistsError` if the directory already
+- [x] Create one new directory with `os.mkdir(path)`.
+- [x] Understand that it raises `FileExistsError` if the directory already
   exists.
-- [ ] Check for existence before creating a directory when appropriate.
+- [x] Check for existence before creating a directory when appropriate.
 
 **My notes:**
 
@@ -99,9 +114,9 @@
 
 ### 7. Creating nested directories with `os.makedirs()`
 
-- [ ] Create multiple levels with `os.makedirs(path)`.
-- [ ] Use `exist_ok=True` when an existing directory is acceptable.
-- [ ] Explain the difference between `os.mkdir()` and `os.makedirs()`.
+- [x] Create multiple levels with `os.makedirs(path)`.
+- [x] Use `exist_ok=True` when an existing directory is acceptable.
+- [x] Explain the difference between `os.mkdir()` and `os.makedirs()`.
 
 **Practice tree:**
 
@@ -111,14 +126,14 @@ data/
     └── 2026/
 ```
 
-- [ ] Create the practice tree.
-- [ ] Confirm each level with `os.path.isdir()`.
+- [x] Create the practice tree.
+- [x] Confirm each level with `os.path.isdir()`.
 
 ### 8. Removing an empty directory
 
-- [ ] Use `os.rmdir(path)` for an empty directory.
-- [ ] Understand why `os.rmdir()` fails when the directory contains files.
-- [ ] Remove child directories before their parent directory.
+- [x] Use `os.rmdir(path)` for an empty directory.
+- [x] Understand why `os.rmdir()` fails when the directory contains files.
+- [x] Remove child directories before their parent directory.
 
 **My notes:**
 
@@ -126,10 +141,10 @@ data/
 
 ### 9. Removing a directory recursively
 
-- [ ] Explain what `shutil.rmtree(path)` does.
-- [ ] Understand that it removes the directory and all of its contents.
-- [ ] Never run it on a path you have not checked carefully.
-- [ ] Practice only inside a temporary test directory.
+- [x] Explain what `shutil.rmtree(path)` does.
+- [x] Understand that it removes the directory and all of its contents.
+- [x] Never run it on a path you have not checked carefully.
+- [x] Practice only inside a temporary test directory.
 
 > **Safety rule:** Recursive deletion is powerful and irreversible. Prefer
 > `os.rmdir()` for empty directories and validate every destructive path.
@@ -140,9 +155,9 @@ data/
 
 ### 10. Removing a file
 
-- [ ] Use `os.remove(path)`.
-- [ ] Check `os.path.exists(path)` before removal when the file is optional.
-- [ ] Understand the difference between removing a file and removing a
+- [x] Use `os.remove(path)`.
+- [x] Check `os.path.exists(path)` before removal when the file is optional.
+- [x] Understand the difference between removing a file and removing a
   directory.
 
 **My notes:**
@@ -151,10 +166,10 @@ data/
 
 ### 11. Renaming a file or directory
 
-- [ ] Use `os.rename(old_path, new_path)`.
-- [ ] Understand that renaming can also move an item when the destination
+- [x] Use `os.rename(old_path, new_path)`.
+- [x] Understand that renaming can also move an item when the destination
   directory is different.
-- [ ] Check that the source exists before renaming.
+- [x] Check that the source exists before renaming.
 
 **My notes:**
 
@@ -162,10 +177,10 @@ data/
 
 ### 12. Reading file size
 
-- [ ] Use `os.path.getsize(path)`.
-- [ ] Understand that the result is measured in bytes.
-- [ ] Convert bytes to KB, MB, or GB.
-- [ ] Explain why a missing path causes an error.
+- [x] Use `os.path.getsize(path)`.
+- [x] Understand that the result is measured in bytes.
+- [x] Convert bytes to KB, MB, or GB.
+- [x] Explain why a missing path causes an error.
 
 **Conversion notes:**
 
@@ -181,10 +196,10 @@ GB = bytes / (1024 * 1024 * 1024)
 
 ### 13. Splitting a file extension
 
-- [ ] Use `os.path.splitext(filename)`.
-- [ ] Separate the file name from its extension.
-- [ ] Filter files such as `.txt`, `.csv`, and `.pdf`.
-- [ ] Compare extensions consistently, for example with `.lower()`.
+- [x] Use `os.path.splitext(filename)`.
+- [x] Separate the file name from its extension.
+- [x] Filter files such as `.txt`, `.csv`, and `.pdf`.
+- [x] Compare extensions consistently, for example with `.lower()`.
 
 **My notes:**
 
@@ -192,20 +207,20 @@ GB = bytes / (1024 * 1024 * 1024)
 
 ### 14. Reading the file name from a path
 
-- [ ] Use `os.path.basename(path)`.
-- [ ] Explain why the basename is useful when displaying a file to a user.
+- [x] Use `os.path.basename(path)`.
+- [x] Explain why the basename is useful when displaying a file to a user.
 
 ### 15. Reading the parent directory from a path
 
-- [ ] Use `os.path.dirname(path)`.
-- [ ] Explain how it identifies the directory containing the item.
+- [x] Use `os.path.dirname(path)`.
+- [x] Explain how it identifies the directory containing the item.
 
 ### 16. Joining paths safely
 
-- [ ] Use `os.path.join("data", "users.csv")`.
-- [ ] Understand why string concatenation such as `"data/" + "users.csv"` is
+- [x] Use `os.path.join("data", "users.csv")`.
+- [x] Understand why string concatenation such as `"data/" + "users.csv"` is
   less portable.
-- [ ] Know that path separators differ between operating systems.
+- [x] Know that path separators differ between operating systems.
 
 **My notes:**
 
@@ -213,10 +228,11 @@ GB = bytes / (1024 * 1024 * 1024)
 
 ### 17. Relative and absolute paths
 
-- [ ] Define a relative path.
-- [ ] Define an absolute path.
-- [ ] Use `os.path.abspath(path)` to create an absolute path.
-- [ ] Explain when each kind of path is useful.
+- [x] Define a relative path.
+- [x] Define an absolute path.
+- [x] Use `os.path.abspath(path)` to create an absolute path.
+- [x] Explain when each kind of path is useful.
+- [x] Normalize a path with `os.path.normpath(path)`.
 
 ---
 
@@ -245,17 +261,17 @@ time as new examples are created.
 
 | Section | Status | Notes |
 | --- | --- | --- |
-| Current location | Not started | |
-| Reading directories | Not started | |
-| Creating/removing directories | Not started | |
-| Managing files | Not started | |
-| File names and paths | Not started | |
+| Current location | Complete | |
+| Reading directories | Complete | |
+| Creating/removing directories | Complete | |
+| Managing files | Complete | |
+| File names and paths | Complete | |
 | Next topics | Not started | |
 
 ### Questions to answer before moving on
 
-- [ ] What is the difference between a file path and a file object?
-- [ ] Why should paths be joined instead of concatenated?
-- [ ] Why can `os.rmdir()` remove only empty directories?
-- [ ] What makes `shutil.rmtree()` dangerous?
-- [ ] How would you process every CSV file inside a folder safely?
+- [x] What is the difference between a file path and a file object?
+- [x] Why should paths be joined instead of concatenated?
+- [x] Why can `os.rmdir()` remove only empty directories?
+- [x] What makes `shutil.rmtree()` dangerous?
+- [x] How would you process every CSV file inside a folder safely?
