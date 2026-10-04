@@ -1,198 +1,231 @@
-"""Interactive, safe lessons for Python's built-in ``os`` module.
+# Python os Module — Complete Practical Guide
+# os = Operating System
+# Python ko operating system ke saath interact karne deta hai:
+# files/folders create/delete karna
+# current directory dekhna/change karna
+# environment variables read karna
+# file paths handle karna
+# system information lena
+# processes/commands ke saath basic interaction
 
-Run ``python os_tut.py`` for the menu, or ``python os_tut.py --lesson all``
-to run the complete walkthrough.
-"""
-
-from __future__ import annotations
-
-import argparse
 import os
-import platform
+import shutil
 import tempfile
-from pathlib import Path
-from typing import Callable
+
+# 1. CURRENT WORKING DIRECTORY 
+# python abhi kis folder ke context mein kaam kar rha hai
+
+original_dir = os.getcwd()
+demo_dir = tempfile.mkdtemp(prefix="os-fundamentals-")
+os.chdir(demo_dir)
+os.makedirs("data", exist_ok=True)
+open("data/file1.txt", "w", encoding="utf-8").write("sample file\n")
+open("data/delete_me.txt", "w", encoding="utf-8").write("temporary file\n")
+open("data/users.csv", "w", encoding="utf-8").write("name\nAsha\n")
+open("data/report.pdf", "w", encoding="utf-8").write("sample report\n")
+
+print(os.getcwd())
+# Output: a temporary practice directory
+
+# 2. CHANGE CURRENT WORKING DIRECTORY
+# os.chdir() function ka use karke current working directory change kar sakte hai
+
+os.chdir(demo_dir)
+print(os.getcwd())
+
+# now check which deirectory we are now by 
+print(os.getcwd())# using 
+
+# now official code will be -
+print(os.getcwd()) # current working directory
+os.chdir(demo_dir) # change current working directory
+print(os.getcwd()) # check current working directory after changing it
+
+# 3 . LISTING FILES AND DIRECTORIES
+print(os.listdir()) # list all files and directories in current working directory
+# output : ['file1.txt', 'file2.txt', 'folder1', 'folder2']
+
+# for getting specific directory or folder
+print(os.listdir('data')) # list all files and directories in specific directory
+
+# where it is use -
+# suppose fodler has 1000 csv files and 
+# you want to read all of them, 
+# then you can use os.listdir() 
+# to get all the files in that 
+# folder and then loop through them to read each file.
+
+files = os.listdir('data') # list all files and directories in specific directory
+for file in files:
+    print(file) # print each file name
 
 
-Lesson = Callable[[], None]
+# 4. check if a file or directory exists
+print(os.path.exists('data')) # check if 'data' directory exists
+# output : True
+
+# In backend use - 
+if os.path.exists('config.json'):
+    print('config file exists')
+else:
+    print('config file does not exist')
 
 
-def heading(title: str) -> None:
-    """Print a consistent lesson heading."""
-    print(f"\n{'=' * 72}\n{title}\n{'=' * 72}")
+
+# 5. File ha ya folder ?? 
+os.path.isfile('main.py') # check if 'data' is a file
+output :True # if its a file 
+
+os.path.isdir('data') #check if data is a directory
+output : True # if its a directory
+
+# Example - 
+for item in os.listdir():
+    if os.path.isfile(item):
+        print(f'{item} is a file')
+    elif os.path.isdir(item):
+        print(f'{item} is a directory')
+
+# output:
+# FILE1.txt is a file
+# FILE2.txt is a file
+# FOLDER1 is a directory
 
 
-def show_path_concepts() -> None:
-    """Explain current, relative, absolute, and joined paths."""
-    heading("1. Paths and the current working directory")
-    current = os.getcwd()
-    relative = os.path.join("data", "notes.txt")
-    absolute = os.path.abspath(relative)
+# 6. Create Folder
+os.mkdir('data/new_folder') # create a new folder named 'new_folder' inside 'data' directory
+# creates: data/new_folder
+# if file already exists then it will throw FileExistsError
 
-    print(f"Current directory : {current}")
-    print(f"Relative path    : {relative}")
-    print(f"Absolute path    : {absolute}")
-    print(f"Path separator    : {os.sep!r}")
-    print(f"File name         : {os.path.basename(absolute)}")
-    print(f"Parent directory  : {os.path.dirname(absolute)}")
+# so 
+if not os.path.exists('data'):
+    os.mkdir('data')  # create a new folder named 'data' if it does not exist
 
-    print("\nUse os.chdir(path) only when a program genuinely needs to change")
-    print("process-wide state. Prefer absolute paths or pathlib.Path in larger apps.")
+# 7. Create nested Folders
+os.makedirs('data/folder1/folder2') # create nested folders 'folder1'
+# creates : data/
+#               folder1/
+#                       folder2
 
+# differnce between os.mkdir() and os.makedirs() 
+# is that os.mkdir() can only create a single directory, while 
+# os.makedirs() can create multiple nested directories at once.
 
-def show_directory_listing() -> None:
-    """Create a temporary tree and demonstrate safe directory inspection."""
-    heading("2. Listing files and directories")
-    with tempfile.TemporaryDirectory(prefix="os-lesson-") as workspace:
-        root = Path(workspace)
-        (root / "documents").mkdir()
-        (root / "documents" / "readme.txt").write_text("Welcome!\n", encoding="utf-8")
-        (root / "images").mkdir()
-        (root / "config.json").write_text('{"debug": true}\n', encoding="utf-8")
-
-        print(f"Example workspace: {root}")
-        print("os.listdir(root):")
-        for name in sorted(os.listdir(root)):
-            print(f"  - {name}")
-
-        print("\nOnly files:")
-        for name in sorted(os.listdir(root)):
-            item = root / name
-            if os.path.isfile(item):
-                print(f"  - {item.name}")
-
-        print("\nOnly directories:")
-        for name in sorted(os.listdir(root)):
-            item = root / name
-            if os.path.isdir(item):
-                print(f"  - {item.name}/")
+# we use makedirs() like - 
+os.makedirs('data/folder1/folder2/folder3',exist_ok = True) # create nested folders 'folder1'
+# exist_ok = True means if the folder already exists then it will not throw an error
 
 
-def show_file_operations() -> None:
-    """Demonstrate create, rename, inspect, and delete operations."""
-    heading("3. Creating, inspecting, renaming, and deleting")
-    with tempfile.TemporaryDirectory(prefix="os-lesson-") as workspace:
-        root = Path(workspace)
-        data_dir = root / "data"
-        nested_dir = data_dir / "reports" / "2026"
+# 8. Delete Empty Folder
+os.rmdir('data/new_folder') # delete the empty folder 'new_folder' inside '
+# if 
+# data/
+#     new_folder/
 
-        os.makedirs(nested_dir, exist_ok=True)
-        source = data_dir / "draft.txt"
-        source.write_text("A small example file.\n", encoding="utf-8")
-        renamed = data_dir / "final.txt"
+# then it will delete new_folder
 
-        print(f"Created nested directory: {nested_dir.relative_to(root)}")
-        print(f"File exists? {os.path.exists(source)}")
-        print(f"Is a file?    {os.path.isfile(source)}")
-        print(f"Size (bytes):  {os.path.getsize(source)}")
+# os.rmdir('data')  # fails while data still contains files
+# if i write this only and data has files inside it then it will throw an error.
 
-        os.rename(source, renamed)
-        print(f"Renamed to: {renamed.name}")
-
-        os.remove(renamed)
-        print(f"Removed file? {not os.path.exists(renamed)}")
-        os.rmdir(nested_dir)
-        os.rmdir(nested_dir.parent)
-        print("Removed the now-empty report directories with os.rmdir().")
-
-        print("\nSafety note: shutil.rmtree() recursively deletes a directory.")
-        print("Use it only with a path you have validated; this lesson never needs it.")
+# Ye folder aur uske andar ka sab kuch delete kar dega.
+# Keep this example commented so a lesson never deletes a real directory.
+# shutil.rmtree("data")
 
 
-def show_environment_and_system() -> None:
-    """Read environment variables and basic platform information."""
-    heading("4. Environment variables and system information")
-    user = os.environ.get("USER") or os.environ.get("USERNAME", "unknown")
-    print(f"Python executable : {os.sys.executable}")
-    print(f"Operating system  : {platform.system()}")
-    print(f"OS release        : {platform.release()}")
-    print(f"Current user      : {user}")
-    print(f"HOME directory    : {os.environ.get('HOME', 'not set')}")
-    print("\nNever print or commit secrets such as API keys from os.environ.")
+#  9. Delete File
+os.remove('data/delete_me.txt') # delete a temporary file inside 'data'
+# Example - 
+if os.path.exists('data/delete_me.txt'):
+    os.remove('data/delete_me.txt') # avoid deleting a required lesson file
 
+# 10. Rename File or folder
+os.rename('data/file1.txt','data/file2.txt') # rename file1.txt to file2.txt
 
-def show_file_filtering() -> None:
-    """Filter a directory by extension, a common automation pattern."""
-    heading("5. Filtering files by extension")
-    with tempfile.TemporaryDirectory(prefix="os-lesson-") as workspace:
-        root = Path(workspace)
-        names = ("users.csv", "notes.txt", "report.csv", "photo.png")
-        for name in names:
-            (root / name).write_text("example\n", encoding="utf-8")
+# 10. File size pta krna ke liye 
+size  = os.path.getsize('data/file2.txt') # get the size of the renamed file
+print(size) # print the size of the file in bytes
 
-        print(f"CSV files in {root}:")
-        for name in sorted(os.listdir(root)):
-            stem, extension = os.path.splitext(name)
-            if extension.lower() == ".csv":
-                print(f"  - {name} (name: {stem}, extension: {extension})")
+# output: depends on the sample text; size is measured in bytes
 
+# we can covnert it in KB, MB, GB by dividing it with 1024, 1024*1024, 1024*1024*1024 respectively.
+# size_kb = size / 1024
+# size_mb = size / (1024 * 1024)
+# size_gb = size / (1024 * 1024 * 1024)
+# print(f'Size of the file in KB: {size_kb} KB')
+# print(f'Size of the file in MB: {size_mb} MB')
+# print(f'Size of the file in GB: {size_gb} GB')
 
-LESSONS: dict[str, tuple[str, Lesson]] = {
-    "paths": ("Paths and the current working directory", show_path_concepts),
-    "listing": ("Listing files and directories", show_directory_listing),
-    "files": ("Creating and managing files", show_file_operations),
-    "system": ("Environment and system information", show_environment_and_system),
-    "filter": ("Filtering files by extension", show_file_filtering),
-}
+# 12. file extension pta krna ke liye
+file = 'data.pdf'
+name , extension = os.path.splitext(file) # split the file name and extension
+print(name) # print the file name without extension
+print(extension) # print the file extension
 
+# output: data
+#         .pdf
 
-def run_lesson(lesson_name: str) -> None:
-    """Run one lesson or every lesson in the recommended order."""
-    if lesson_name == "all":
-        for _, lesson in LESSONS.values():
-            lesson()
-        return
-
-    try:
-        LESSONS[lesson_name][1]()
-    except KeyError as error:
-        valid = ", ".join((*LESSONS, "all"))
-        raise SystemExit(f"Unknown lesson {lesson_name!r}. Choose: {valid}") from error
-
-
-def interactive_menu() -> None:
-    """Let a learner choose lessons interactively."""
-    while True:
-        heading("Python OS Fundamentals")
-        for number, (key, (title, _)) in enumerate(LESSONS.items(), start=1):
-            print(f"{number}. {title} [{key}]")
-        print("A. Run all lessons")
-        print("Q. Quit")
-
-        choice = input("\nChoose a lesson: ").strip().lower()
-        if choice == "q":
-            print("Happy learning!")
-            return
-        if choice == "a":
-            run_lesson("all")
-            input("\nPress Enter to return to the menu...")
-            continue
-
-        keys = list(LESSONS)
-        if choice.isdigit() and 1 <= int(choice) <= len(keys):
-            run_lesson(keys[int(choice) - 1])
-            input("\nPress Enter to return to the menu...")
-        else:
-            print("Please choose a listed number, A, or Q.")
-
-
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "--lesson",
-        choices=(*LESSONS, "all"),
-        help="run one lesson without opening the interactive menu",
-    )
-    return parser.parse_args()
-
-
-def main() -> None:
-    args = parse_args()
-    if args.lesson:
-        run_lesson(args.lesson)
+# extremly useful when processing files.
+# Example - 
+for file in os.listdir('data'):
+    name , ext = os.path.splitext(file)
+    if ext == '.txt':
+        print(f'{file} is a text file')
+    elif ext == '.csv':
+        print(f'{file} is a csv file')
+    elif ext == '.pdf':
+        print(f'{file} is a pdf file')
     else:
-        interactive_menu()
+        print(f'{file} is an unknown file type')
 
 
-if __name__ == "__main__":
-    main()
+# 13. File name and directory name pta krna ke liye
+path  = 'data/file2.txt'
+os.path.basename(path) # get the file name from the path
+# output : 'file2.txt'
+
+os.path.dirname(path) # get the directory name from the path
+# output : 'data/file1.txt' file kis directory mein hai
+
+#  14. joining file path (important)
+path = 'data/' + 'users.csv' # this is not a good way to join file path because it will not work on all operating systems
+# instead use os.path.join() function to join file path
+path = os.path.join('data','users.csv') # this will join the file path in a way that it will work on all operating systems
+
+# output: data/users.csv 
+# this is due because window and mac differ
+# in linux/Mac : /
+# in windows : \
+
+# Example - 
+DATA_DIR = 'data'
+file_path = os.path.join(DATA_DIR,'users.csv') # cleaner version of joining file path
+
+
+# 15. Absolute path and relative path 
+path  = 'data/users.csv'
+print(os.path.abspath(path)) # get the absolute path of the file 'users.csv' inside 'data' directory
+# output : /Users/anuj/Desktop/project/py/data/users.csv
+
+# Difference between absolute path and relative path is that absolute path is the full path of the file or directory from the root directory, while relative path is the path of the file or directory from the current working directory.
+# realtive path = data/users.csv
+# absolute path = /Users/anuj/Desktop/project/py/data/users.csv
+
+
+# 16. Normalize a path
+path = 'data/../data/users.csv'
+print(os.path.normpath(path))  # data/users.csv
+
+# Restore the learner's original directory and remove only our demo workspace.
+os.chdir(original_dir)
+shutil.rmtree(demo_dir)
+
+
+
+
+
+
+
+
+
+
+
