@@ -9,7 +9,6 @@ from __future__ import annotations
 import argparse
 import os
 import platform
-import shutil
 import tempfile
 from pathlib import Path
 from typing import Callable
