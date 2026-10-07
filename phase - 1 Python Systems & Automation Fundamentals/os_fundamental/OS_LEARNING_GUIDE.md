@@ -19,6 +19,7 @@ The completed tutorial now covers:
 - File sizes and extensions
 - File names, parent directories, joined paths, absolute paths, and normalized
   paths
+- Organizing files automatically by extension
 
 ## `os` and `pathlib`: two ways to work with paths
 
@@ -131,6 +132,53 @@ rule applies to files named after other standard-library modules, such as
   paths with strings such as `"data/" + filename`.
 - Convert between them when necessary: `str(path)` produces a string, and
   `Path(existing_string)` produces a `Path` object.
+
+## File automation: organizing files by extension
+
+The [Automate_file.py](../automate_file/Automate_file.py) example combines
+`os` and `shutil` to organize files in a testing directory. It checks each
+file's extension and moves the file into a category folder such as `images`,
+`Documents`, or `Scripts`.
+
+The main steps are:
+
+1. Use `os.listdir()` to read the entries in the source directory.
+2. Use `os.path.isdir()` to skip directories.
+3. Use `os.path.splitext()` to separate a filename from its extension.
+4. Match the lowercase extension against the `file_types` dictionary.
+5. Use `os.makedirs(..., exist_ok=True)` to create the category folder.
+6. Use `shutil.move()` to move the file into that category folder.
+
+The important corrected code is:
+
+```python
+ext = os.path.splitext(filename)[1].lower()
+
+for folder, extensions in file_types.items():
+    if ext in extensions:
+        target_folder = os.path.join(folder_path, folder)
+        os.makedirs(target_folder, exist_ok=True)
+        shutil.move(file_path, os.path.join(target_folder, filename))
+        break
+```
+
+### Errors corrected in the automation example
+
+The original code had two problems:
+
+- `os.path.splittext()` was misspelled. The correct function is
+  `os.path.splitext()`. The typo causes
+  `AttributeError: module 'posixpath' has no attribute 'splittext'`.
+- The original destination used the filename as a directory. The destination
+  must use the matching category name, such as `images` or `Documents`;
+  otherwise the script can create an incorrect directory for each file.
+
+### Safety notes
+
+This script changes the file system: it creates folders and moves files.
+Always test it on a practice directory first, confirm `folder_path`, and keep
+backups of important files. Files with extensions that are not listed in
+`file_types` are left unchanged.
 
 ## How to use this guide
 
@@ -363,6 +411,7 @@ time as new examples are created.
   usually safer.
 - [ ] Process information such as `os.getpid()`.
 - [x] Working with `pathlib.Path` as a modern alternative to `os.path`.
+- [x] Organizing files by extension with `os`, `os.path`, and `shutil`.
 - [ ] Handling `FileNotFoundError`, `PermissionError`, and
   `FileExistsError`.
 - [ ] Writing tests for filesystem code with temporary directories.

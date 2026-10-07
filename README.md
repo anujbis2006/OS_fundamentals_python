@@ -25,6 +25,11 @@ to `os.path`. It covers path joining, file and directory checks, directory
 iteration, glob patterns, the difference between `os` and `pathlib`, and the
 module-name collision that occurs when a user file is named `pathlib.py`.
 
+It also includes a file-automation example in
+[Automate_file.py](phase%20-%201%20Python%20Systems%20%26%20Automation%20Fundamentals/automate_file/Automate_file.py).
+The script organizes files by extension using `os`, `os.path`, and `shutil`,
+and explains the corrected `splitext()` typo and destination-folder logic.
+
 For the detailed completion checklist and the next learning roadmap, see
 [OS_LEARNING_GUIDE.md](phase%20-%201%20Python%20Systems%20%26%20Automation%20Fundamentals/os_fundamental/OS_LEARNING_GUIDE.md).
 
@@ -53,10 +58,12 @@ python os_tut.py --lesson all
 OS_fundamentals_python/
 ├── README.md      # Course overview, commands, and safety notes
 ├── phase - 1 Python Systems & Automation Fundamentals/
-│   └── os_fundamental/
+│   ├── os_fundamental/
 │       ├── OS_LEARNING_GUIDE.md # Checklist, pathlib explanation, and comparison
 │       ├── os_tut.py      # Interactive lesson runner and runnable examples
 │       └── pathlib_demo.py # pathlib examples
+│   └── automate_file/
+│       └── Automate_file.py # Organizes files into folders by extension
 └── .gitignore     # Python caches and local environment files
 ```
 
@@ -69,6 +76,8 @@ OS_fundamentals_python/
 3. **File operations** - creating directories, checking metadata, renaming,
    and removing files.
 4. **Automation patterns** - finding files by extension, such as CSV files.
+5. **File organization** - moving files into category folders based on their
+   extensions with `shutil.move()`.
 
 ## Next steps
 
