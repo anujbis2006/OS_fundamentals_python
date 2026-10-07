@@ -20,8 +20,13 @@ The core tutorial is complete. The interactive examples currently cover:
 - Reading file names and parent directories
 - Joining paths safely across operating systems
 
+The guide also explains `pathlib.Path` as a modern, object-oriented alternative
+to `os.path`. It covers path joining, file and directory checks, directory
+iteration, glob patterns, the difference between `os` and `pathlib`, and the
+module-name collision that occurs when a user file is named `pathlib.py`.
+
 For the detailed completion checklist and the next learning roadmap, see
-[OS_LEARNING_GUIDE.md](OS_LEARNING_GUIDE.md).
+[OS_LEARNING_GUIDE.md](phase%20-%201%20Python%20Systems%20%26%20Automation%20Fundamentals/os_fundamental/OS_LEARNING_GUIDE.md).
 
 ## Learning path
 
@@ -47,8 +52,11 @@ python os_tut.py --lesson all
 ```text
 OS_fundamentals_python/
 ├── README.md      # Course overview, commands, and safety notes
-├── OS_LEARNING_GUIDE.md # Completed checklist and future topics
-├── os_tut.py      # Interactive lesson runner and runnable examples
+├── phase - 1 Python Systems & Automation Fundamentals/
+│   └── os_fundamental/
+│       ├── OS_LEARNING_GUIDE.md # Checklist, pathlib explanation, and comparison
+│       ├── os_tut.py      # Interactive lesson runner and runnable examples
+│       └── pathlib_demo.py # pathlib examples
 └── .gitignore     # Python caches and local environment files
 ```
 
@@ -66,8 +74,9 @@ OS_fundamentals_python/
 
 The core lessons are complete. The next planned topics are `os.walk()`,
 `os.scandir()`, `os.stat()`, permissions, environment variables, processes,
-`subprocess`, `pathlib`, exception handling, and filesystem tests. The
-checklist in [OS_LEARNING_GUIDE.md](OS_LEARNING_GUIDE.md) tracks these topics.
+`subprocess`, exception handling, and filesystem tests. The
+[OS_LEARNING_GUIDE.md](phase%20-%201%20Python%20Systems%20%26%20Automation%20Fundamentals/os_fundamental/OS_LEARNING_GUIDE.md)
+checklist tracks these topics and compares `os` with `pathlib`.
 
 ## Safety by design
 
